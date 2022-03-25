@@ -1,0 +1,8 @@
+.books-grid {
+  margin-top: 70px;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
