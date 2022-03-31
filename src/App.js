@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
-import Shelf from "./components/Shelf/Shelf";
-import Details from "./components/Details/Details";
+import Main from "./components/Main/Main";
 import Search from "./components/Search/Search";
 import { Route } from "react-router-dom";
 import "./App.css";
 
+const shelves = [
+  { name: "Currently Reading", code: "currentlyReading" },
+  { name: "Want to Read", code: "wantToRead" },
+  { name: "Read", code: "read" },
+];
+
 const App = () => {
   const [books, setBooks] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [input, setInput] = useState("");
+  const [searchedBooks, setSearchedBooks] = useState([]);
 
   useEffect(() => {
     BooksAPI.getAll()
-      .then((books) => {
-        setBooks(books);
+      .then((allBooksFromAPI) => {
+        setBooks(allBooksFromAPI);
       })
       .finally(setIsUpdated(false))
       .catch(() => console.log("unable to fetch books"));
   }, [isUpdated]);
 
-  const shelfBooks = books.filter((book) => book.shelf !== "none");
+  useEffect(() => {
+    if (input) {
+      BooksAPI.search(input)
+        .then((searchedBooksFromAPI) => {
+          setSearchedBooks(searchedBooksFromAPI);
+        })
+        .catch(() => {
+          console.log("unable to search books");
+        });
+    }
+  }, [input]);
 
   return (
     <div className="app">
@@ -27,11 +44,21 @@ const App = () => {
         exact
         path="/"
         render={() => (
-          <Shelf shelfBooks={shelfBooks} setIsUpdated={setIsUpdated} />
+          <Main books={books} setIsUpdated={setIsUpdated} shelves={shelves} />
         )}
       />
-      <Route path="/search" component={() => <Search books={books} />} />
-      <Route path="/details" component={() => <Details />} />
+      <Route
+        path="/search"
+        render={() => (
+          <Search
+            setIsUpdated={setIsUpdated}
+            shelves={shelves}
+            input={input}
+            setInput={setInput}
+            searchedBooks={searchedBooks}
+          />
+        )}
+      />
     </div>
   );
 };

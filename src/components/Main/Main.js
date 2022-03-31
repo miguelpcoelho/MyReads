@@ -3,17 +3,18 @@ import Header from "./Header/Header";
 import SearchButton from "./SearchButton/SearchButton";
 import ShelfContainer from "./ShelfContainer/ShelfContainer";
 
-const Shelf = (props) => {
+const Main = (props) => {
   return (
     <div>
       <Header />
       <ShelfContainer
-        shelfBooks={props.shelfBooks}
+        books={props.books}
         setIsUpdated={props.setIsUpdated}
+        shelves={props.shelves}
       />
       <SearchButton />
     </div>
   );
 };
 
-export default Shelf;
+export default Main;

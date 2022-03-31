@@ -3,8 +3,8 @@ import "./Book.css";
 import * as BooksAPI from "../../../BooksAPI";
 
 const Book = (props) => {
-  const handleSelectBookCode = (bookCode) => {
-    BooksAPI.update(props.bookDetails, bookCode)
+  const handleSelectShelf = (shelfCode) => {
+    BooksAPI.update(props.bookDetails, shelfCode)
       .then(props.setIsUpdated(true))
       .catch(() => console.log("unable to update books"));
   };
@@ -18,25 +18,56 @@ const Book = (props) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${props.bookDetails.imageLinks.smallThumbnail})`,
+              backgroundImage:
+                props.bookDetails.imageLinks &&
+                props.bookDetails.imageLinks.smallThumbnail
+                  ? `url(${props.bookDetails.imageLinks.smallThumbnail})`
+                  : "none",
             }}
           />
           <div className="book-shelf-changer">
             <select
               onChange={(event) => {
-                handleSelectBookCode(event.target.value);
+                handleSelectShelf(event.target.value);
               }}
             >
               <option value="move" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              {/* mudar */}
-              <option value="wantToRead" selected>
-                Want to Read
-              </option>
-              <option value="read">Read</option>
               <option value="none">None</option>
+              <option
+                value={`${props.shelves[0].code}`}
+                selected={
+                  props.bookDetails.shelf === `${props.shelves[0].code}`
+                }
+                disabled={
+                  props.bookDetails.shelf === `${props.shelves[0].code}`
+                }
+              >
+                {`${props.shelves[0].name}`}
+              </option>
+              <option
+                value={`${props.shelves[1].code}`}
+                selected={
+                  props.bookDetails.shelf === `${props.shelves[1].code}`
+                }
+                disabled={
+                  props.bookDetails.shelf === `${props.shelves[1].code}`
+                }
+              >
+                {`${props.shelves[1].name}`}
+              </option>
+              <option
+                value={`${props.shelves[2].code}`}
+                selected={
+                  props.bookDetails.shelf === `${props.shelves[2].code}`
+                }
+                disabled={
+                  props.bookDetails.shelf === `${props.shelves[2].code}`
+                }
+              >
+                {`${props.shelves[2].name}`}
+              </option>
             </select>
           </div>
         </div>
