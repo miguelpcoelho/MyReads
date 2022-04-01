@@ -3,9 +3,11 @@ import "./Book.css";
 import * as BooksAPI from "../../../BooksAPI";
 
 const Book = (props) => {
+  const { bookDetails, setIsUpdated, shelves } = props;
+
   const handleSelectShelf = (shelfCode) => {
-    BooksAPI.update(props.bookDetails, shelfCode)
-      .then(props.setIsUpdated(true))
+    BooksAPI.update(bookDetails, shelfCode)
+      .then(setIsUpdated(true))
       .catch(() => console.log("unable to update books"));
   };
 
@@ -19,9 +21,8 @@ const Book = (props) => {
               width: 128,
               height: 193,
               backgroundImage:
-                props.bookDetails.imageLinks &&
-                props.bookDetails.imageLinks.smallThumbnail
-                  ? `url(${props.bookDetails.imageLinks.smallThumbnail})`
+                bookDetails.imageLinks && bookDetails.imageLinks.smallThumbnail
+                  ? `url(${bookDetails.imageLinks.smallThumbnail})`
                   : "none",
             }}
           />
@@ -36,43 +37,31 @@ const Book = (props) => {
               </option>
               <option value="none">None</option>
               <option
-                value={`${props.shelves[0].code}`}
-                selected={
-                  props.bookDetails.shelf === `${props.shelves[0].code}`
-                }
-                disabled={
-                  props.bookDetails.shelf === `${props.shelves[0].code}`
-                }
+                value={`${shelves[0].code}`}
+                selected={bookDetails.shelf === `${shelves[0].code}`}
+                disabled={bookDetails.shelf === `${shelves[0].code}`}
               >
-                {`${props.shelves[0].name}`}
+                {`${shelves[0].name}`}
               </option>
               <option
-                value={`${props.shelves[1].code}`}
-                selected={
-                  props.bookDetails.shelf === `${props.shelves[1].code}`
-                }
-                disabled={
-                  props.bookDetails.shelf === `${props.shelves[1].code}`
-                }
+                value={`${shelves[1].code}`}
+                selected={bookDetails.shelf === `${shelves[1].code}`}
+                disabled={bookDetails.shelf === `${shelves[1].code}`}
               >
-                {`${props.shelves[1].name}`}
+                {`${shelves[1].name}`}
               </option>
               <option
-                value={`${props.shelves[2].code}`}
-                selected={
-                  props.bookDetails.shelf === `${props.shelves[2].code}`
-                }
-                disabled={
-                  props.bookDetails.shelf === `${props.shelves[2].code}`
-                }
+                value={`${shelves[2].code}`}
+                selected={bookDetails.shelf === `${shelves[2].code}`}
+                disabled={bookDetails.shelf === `${shelves[2].code}`}
               >
-                {`${props.shelves[2].name}`}
+                {`${shelves[2].name}`}
               </option>
             </select>
           </div>
         </div>
-        <div className="book-title">{props.bookDetails.title}</div>
-        <div className="book-authors">{props.bookDetails.authors}</div>
+        <div className="book-title">{bookDetails.title}</div>
+        <div className="book-authors">{bookDetails.authors}</div>
       </div>
     </li>
   );

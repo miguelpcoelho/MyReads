@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = (props) => {
+  const { setInput, input } = props;
+
   const handleChange = (searchTerm) => {
-    props.setInput(searchTerm);
+    setInput(searchTerm);
   };
 
   return (
@@ -15,7 +17,7 @@ const Header = (props) => {
       <input
         type="text"
         placeholder="Search by title or author"
-        value={props.input}
+        value={input}
         onChange={(event) => {
           handleChange(event.target.value);
         }}

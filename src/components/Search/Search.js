@@ -4,22 +4,23 @@ import Book from "../shared/Book/Book";
 import "./Search.css";
 
 const Search = (props) => {
+  const { setInput, input, setIsUpdated, shelves, searchedBooks } = props;
   return (
     <div>
-      <Header setInput={props.setInput} input={props.input} />
+      <Header setInput={setInput} input={input} />
       <div className="books-grid">
-        {props.searchedBooks.length > 0 ? (
+        {searchedBooks.length > 0 ? (
           <ol className="books-grid">
-            {props.searchedBooks.map((bookDetails) => (
+            {searchedBooks.map((bookDetails) => (
               <Book
                 bookDetails={bookDetails}
-                setIsUpdated={props.setIsUpdated}
-                shelves={props.shelves}
+                setIsUpdated={setIsUpdated}
+                shelves={shelves}
               />
             ))}
           </ol>
         ) : (
-          props.input && <h2>Any book that matches the search</h2>
+          input && <h2>Any book that matches the search</h2>
         )}
       </div>
     </div>

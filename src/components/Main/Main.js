@@ -4,13 +4,14 @@ import SearchButton from "./SearchButton/SearchButton";
 import ShelfContainer from "./ShelfContainer/ShelfContainer";
 
 const Main = (props) => {
+  const { shelves, books, setIsUpdated } = props;
   return (
     <div>
       <Header />
       <ShelfContainer
-        books={props.books}
-        setIsUpdated={props.setIsUpdated}
-        shelves={props.shelves}
+        books={books}
+        setIsUpdated={setIsUpdated}
+        shelves={shelves}
       />
       <SearchButton />
     </div>

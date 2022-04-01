@@ -30,7 +30,18 @@ const App = () => {
     if (input) {
       BooksAPI.search(input)
         .then((searchedBooksFromAPI) => {
-          setSearchedBooks(searchedBooksFromAPI);
+          if (input === "") {
+            setSearchedBooks([]);
+          } else {
+            searchedBooksFromAPI.forEach((searchedBookFromAPI) => {
+              books.forEach((book) => {
+                if (searchedBookFromAPI.id === book.id) {
+                  searchedBookFromAPI.shelf = book.shelf;
+                }
+              });
+            });
+            setSearchedBooks(searchedBooksFromAPI);
+          }
         })
         .catch(() => {
           console.log("unable to search books");
