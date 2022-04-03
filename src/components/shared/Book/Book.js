@@ -31,28 +31,31 @@ const Book = (props) => {
               onChange={(event) => {
                 handleSelectShelf(event.target.value);
               }}
+              value={bookDetails.shelf ? bookDetails.shelf : "none"}
             >
-              <option value="move" disabled>
+              <option value="move" key="move" disabled>
                 Move to...
               </option>
-              <option value="none">None</option>
+              <option value="none" key="none">
+                None
+              </option>
               <option
                 value={`${shelves[0].code}`}
-                selected={bookDetails.shelf === `${shelves[0].code}`}
+                key={`${shelves[0].code}`}
                 disabled={bookDetails.shelf === `${shelves[0].code}`}
               >
                 {`${shelves[0].name}`}
               </option>
               <option
                 value={`${shelves[1].code}`}
-                selected={bookDetails.shelf === `${shelves[1].code}`}
+                key={`${shelves[1].code}`}
                 disabled={bookDetails.shelf === `${shelves[1].code}`}
               >
                 {`${shelves[1].name}`}
               </option>
               <option
                 value={`${shelves[2].code}`}
-                selected={bookDetails.shelf === `${shelves[2].code}`}
+                key={`${shelves[2].code}`}
                 disabled={bookDetails.shelf === `${shelves[2].code}`}
               >
                 {`${shelves[2].name}`}

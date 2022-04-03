@@ -27,26 +27,25 @@ const App = () => {
   }, [isUpdated]);
 
   useEffect(() => {
-    if (input) {
+    if (input === "") {
+      setSearchedBooks([]);
+    } else {
       BooksAPI.search(input)
         .then((searchedBooksFromAPI) => {
-          if (input === "") {
-            setSearchedBooks([]);
-          } else {
-            searchedBooksFromAPI.forEach((searchedBookFromAPI) => {
-              books.forEach((book) => {
-                if (searchedBookFromAPI.id === book.id) {
-                  searchedBookFromAPI.shelf = book.shelf;
-                }
-              });
+          searchedBooksFromAPI.forEach((searchedBookFromAPI) => {
+            books.forEach((book) => {
+              if (searchedBookFromAPI.id === book.id) {
+                searchedBookFromAPI.shelf = book.shelf;
+              }
             });
-            setSearchedBooks(searchedBooksFromAPI);
-          }
+          });
+          setSearchedBooks(searchedBooksFromAPI);
         })
         .catch(() => {
           console.log("unable to search books");
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]);
 
   return (
